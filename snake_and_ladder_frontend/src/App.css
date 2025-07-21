@@ -1,0 +1,72 @@
+/* CSS Variables for Theme Management and Snake and Ladder palette */
+:root {
+  --snal-primary: #34a853;
+  --snal-secondary: #22223b;
+  --snal-accent: #f2cc8f;
+  --snal-bg: #f8f8f8;
+  --snal-text: #333;
+  --snal-board-bg: #fafafa;
+}
+
+.App {
+  text-align: center;
+  background-color: var(--snal-bg);
+  color: var(--snal-text);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Snake and Ladder Specific Styling */
+.snal-root {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.snal-container {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(51, 153, 51, 0.10);
+  padding: 32px 22px 20px 22px;
+  margin: 36px auto 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.snal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.snal-title {
+  font-size: 2.1rem;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.snal-description {
+  color: var(--snal-secondary);
+  font-size: 1.14em;
+  margin: 6px 0 20px 0;
+}
+
+.snal-board-placeholder {
+  margin: 48px 0 64px 0;
+  background: var(--snal-board-bg);
+  border: 2px dashed var(--snal-accent);
+  border-radius: 22px;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 1.5em;
+  opacity: 0.6;
+}
+
+.snal-footer {
+  margin-top: 30px;
+  color: var(--snal-secondary);
+}
