@@ -1,6 +1,6 @@
-/* CSS Variables for Theme Management */
+/* CSS Variables for Theme Management and TicTacToe palette */
 :root {
-  /* Light theme colors */
+  /* General Theme (keep for fallback) */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #282c34;
@@ -8,10 +8,19 @@
   --border-color: #e9ecef;
   --button-bg: #007bff;
   --button-text: #ffffff;
+
+  /* Tic Tac Toe palette (to be overridden by App.js for live theme) */
+  --ttt-primary: #1976D2;
+  --ttt-secondary: #424242;
+  --ttt-accent: #FFEB3B;
+  --ttt-bg: #fff;
+  --ttt-text: #232323;
+  --ttt-board-bg: #f7f9fa;
+  --ttt-btn-bg: #1976D2;
+  --ttt-btn-text: #fff;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
   --bg-primary: #1a1a1a;
   --bg-secondary: #282c34;
   --text-primary: #ffffff;
@@ -19,43 +28,127 @@
   --border-color: #404040;
   --button-bg: #0056b3;
   --button-text: #ffffff;
+  --ttt-bg: #212121;
+  --ttt-text: #fafafa;
+  --ttt-board-bg: #333;
 }
 
 .App {
   text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--ttt-bg);
+  color: var(--ttt-text);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Tic Tac Toe Specific Styling */
+.ttt-root {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.ttt-container {
+  width: 100%;
+  max-width: 370px;
+  background: var(--ttt-bg);
+  border-radius: 18px;
+  box-shadow: 0 4px 48px rgba(40,76,100,0.08);
+  padding: 32px 22px 20px 22px;
+  margin: 36px auto 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
   position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.ttt-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.ttt-title {
+  font-size: 2rem;
+  margin: 0;
+  letter-spacing: 1.5px;
+}
+
+.ttt-turn-indicator {
+  margin: 0;
+  min-height: 36px;
+  font-size: 1.18rem;
+  transition: color 0.16s;
+}
+
+.ttt-board {
+  width: 200px;
+  margin: 0 auto 10px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  background: var(--ttt-board-bg);
+  border-radius: 16px;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 2px solid var(--ttt-primary);
+}
+
+.ttt-square {
+  width: 60px; height: 60px;
+  font-size: 2rem;
+  font-weight: 700;
+  border: 2px solid var(--ttt-primary);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ttt-primary);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(40, 118, 210, 0.03);
+}
+[data-theme="dark"] .ttt-square {
+  background: #292929;
+  color: var(--ttt-accent);
+}
+
+.ttt-square:disabled {
+  background: #ededed;
+  color: var(--ttt-secondary);
+  cursor: default;
+  opacity: 0.55;
+}
+[data-theme="dark"] .ttt-square:disabled {
+  background: #3a3a3a;
+  color: #928e8e;
+}
+
+.ttt-square:focus {
+  box-shadow: 0 0 0 2px var(--ttt-accent);
+}
+
+.ttt-restart-btn {
+  background: var(--ttt-accent);
+  color: #222;
+  box-shadow: 0 0.5px 6px rgba(255,235,59,0.10);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 1px;
+  transition: background 0.16s, color 0.16s;
+  margin-bottom: 4px;
+}
+.ttt-restart-btn:hover, .ttt-restart-btn:focus {
+  background: #fff500;
+  color: var(--ttt-secondary);
+}
+
+.ttt-footer {
+  margin-top: 16px;
 }
 
 .theme-toggle {
@@ -71,34 +164,23 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
 }
-
 .theme-toggle:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  opacity: 0.91;
+}
+.theme-toggle:active { transform: translateY(0); }
+
+@media (max-width: 550px) {
+  .ttt-board { width: 96vw; min-width: 185px; max-width: 99vw; }
+  .ttt-square { width: 18vw; height: 18vw; min-width: 48px; min-height: 48px; font-size: 1.4rem;}
+  .ttt-container { max-width: 98vw; padding: 16px 2vw 18px 2vw; }
+  .ttt-title { font-size: 1.3rem; }
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+@media (max-width: 370px) {
+  .ttt-square { width: 15vw; height: 15vw; font-size: 1.05rem;}
+  .ttt-container { padding: 7px 1vw;}
 }
